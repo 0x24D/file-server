@@ -47,17 +47,18 @@ class ClientHandler extends Thread
 	public void run()
 	{
 		String filePath = input.nextLine();
-		System.out.println(filePath);
 		filePath = (filePath.substring(4));
+		//have to substring first as there is a space before requested file path
+		filePath = filePath.substring(0, filePath.indexOf(" "));
+		//or substring(1,...) and add trailing / to file path
 		System.out.println(filePath);
-		filePath = filePath.substring(1,filePath.indexOf(" "));
-		System.out.println(filePath);
-		System.out.println("TEST/"+filePath);
+		System.out.println("TEST"+filePath);
 
 		// try
 		// {
 		// 	System.out.println("Closing down connection...");
 		// 	client.close();
+		// 	input.close();
 		// }
 		// catch(IOException ioEx)
 		// {
