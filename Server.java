@@ -48,15 +48,20 @@ class ClientHandler extends Thread
 	{
 		String filePath = input.nextLine();
 		System.out.println(filePath);
-		
-		try
-		{
-			System.out.println("Closing down connection...");
-			client.close();
-		}
-		catch(IOException ioEx)
-		{
-			System.out.println("* Disconnection problem! *");
-		}
+		filePath = (filePath.substring(4));
+		System.out.println(filePath);
+		filePath = filePath.substring(1,filePath.indexOf(" "));
+		System.out.println(filePath);
+		System.out.println("TEST/"+filePath);
+
+		// try
+		// {
+		// 	System.out.println("Closing down connection...");
+		// 	client.close();
+		// }
+		// catch(IOException ioEx)
+		// {
+		// 	System.out.println("* Disconnection problem! *");
+		// }
 	}
 }
