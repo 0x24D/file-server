@@ -5,6 +5,7 @@ import java.util.*;
 public class Server{
 
 	public static void main(String[] args) throws IOException{
+
 		ServerSocket serverSocket = null;
 		final int PORT = 7500;
 		Socket client;
@@ -30,10 +31,11 @@ public class Server{
 }
 
 class ClientHandler extends Thread{
+
 	private Socket client;
 	private Scanner input;
 	private PrintWriter output;
-	private FileReader fileIn;
+	private Scanner fileIn;
 
 	public ClientHandler(Socket socket) throws IOException{
 		client = socket;
@@ -48,10 +50,11 @@ class ClientHandler extends Thread{
 		filePath = filePath.substring(1, filePath.indexOf(" "));
 		//or substring(0,...) and remove trailing / from file path
 		System.out.println("Requested file: " + filePath);
-		
+
 		try{
-			fileIn =  new FileReader("TEST\\" + filePath);
-			output.print(fileIn);
+			fileIn =  new Scanner(new FileReader("TEST//" + filePath));
+			while (fileIn.hasNext())
+				output.print(fileIn.nextLine());
 
 		}
 		catch (FileNotFoundException e){
