@@ -54,7 +54,7 @@ class ClientHandler extends Thread{
 		try{
 			fileIn =  new Scanner(new FileReader("TEST//" + filePath));
 			while (fileIn.hasNext())
-				output.print(fileIn.nextLine());
+				output.println(fileIn.nextLine());
 
 		}
 		catch (FileNotFoundException e){
