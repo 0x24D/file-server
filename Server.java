@@ -1,6 +1,7 @@
 import java.io.*;
 import java.net.*;
 import java.util.*;
+import java.nio.file.Files;
 
 public class Server{
 
@@ -50,23 +51,27 @@ class ClientHandler extends Thread{
 		filePath = filePath.substring(1, filePath.indexOf(" "));
 		//or substring(0,...) and remove trailing / from file path
 		System.out.println("Requested file: " + filePath);
-
+		File file = new File ("TEST//" + filePath);
 		try{
-			fileIn =  new Scanner(new FileReader("TEST//" + filePath));
+			fileIn =  new Scanner(new FileReader(file));
+				System.out.println(Files.probeContentType(file.toPath()));
+				output.println("HTTP/1.0 200 OK\nContent-Type: " + Files.probeContentType(file.toPath())+"\n\n");
 			while (fileIn.hasNext())
 				output.println(fileIn.nextLine());
-
 		}
 		catch (FileNotFoundException e){
+			System.out.println(e);
+		}
+		catch (IOException e){
 			System.out.println(e);
 		}
 
 		try{
 			System.out.println("Closing down connection...");
-			client.close();
 			input.close();
 			output.close();
 			fileIn.close();
+			client.close();
 		}
 		catch(IOException e){
 			System.out.println("* Disconnection problem! *");
