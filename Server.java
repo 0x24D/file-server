@@ -48,10 +48,10 @@ class ClientHandler extends Thread{
 		filePath = (filePath.substring(4));
 		//have to substring first as there is a space before requested file path
 		filePath = filePath.substring(1, filePath.indexOf(" "));
-		//or substring(0,...) and remove trailing / from file path
-		File file = new File ("TEST//" + filePath);
+		//or substring(0,...) and remove trailing / from TEST
+		File file = new File ("TEST/" + filePath);
 		try{
-			input =  new Scanner(new FileReader(file));
+			input =  new Scanner(new BufferedReader(new FileReader(file)));
 			output.print("HTTP/1.0 200 OK\nContent-Type: " + Files.probeContentType(file.toPath())+"\n\n");
 			while (input.hasNext())
 				output.println(input.nextLine());
