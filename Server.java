@@ -36,7 +36,6 @@ class ClientHandler extends Thread{
 	private Socket client;
 	private Scanner input;
 	private PrintWriter output;
-	private Scanner fileIn;
 
 	public ClientHandler(Socket socket) throws IOException{
 		client = socket;
@@ -50,16 +49,15 @@ class ClientHandler extends Thread{
 		//have to substring first as there is a space before requested file path
 		filePath = filePath.substring(1, filePath.indexOf(" "));
 		//or substring(0,...) and remove trailing / from file path
-		System.out.println("Requested file: " + filePath);
 		File file = new File ("TEST//" + filePath);
 		try{
-			fileIn =  new Scanner(new FileReader(file));
-				System.out.println(Files.probeContentType(file.toPath()));
-				output.println("HTTP/1.0 200 OK\nContent-Type: " + Files.probeContentType(file.toPath())+"\n\n");
-			while (fileIn.hasNext())
-				output.println(fileIn.nextLine());
+			input =  new Scanner(new FileReader(file));
+			output.print("HTTP/1.0 200 OK\nContent-Type: " + Files.probeContentType(file.toPath())+"\n\n");
+			while (input.hasNext())
+				output.println(input.nextLine());
 		}
 		catch (FileNotFoundException e){
+			output.println("HTTP/1.0 404 Not Found");
 			System.out.println(e);
 		}
 		catch (IOException e){
@@ -70,7 +68,6 @@ class ClientHandler extends Thread{
 			System.out.println("Closing down connection...");
 			input.close();
 			output.close();
-			fileIn.close();
 			client.close();
 		}
 		catch(IOException e){
